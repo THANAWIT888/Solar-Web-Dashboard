@@ -4,10 +4,9 @@ import {
   Menu,
   MenuItem,
   SubMenu,
-  // SidebarFooter,
 } from "react-pro-sidebar";
-import { Box, IconButton, Typography, useTheme, Badge } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, IconButton, Typography } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -19,10 +18,16 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import TableViewIcon from '@mui/icons-material/TableView';
 import LogoutIcon from '@mui/icons-material/Logout';
-const SideBar = () => {
-  const [isCollapsed, setisCollapsed] = useState(false);
+
+const SideBar = ({ isSidebar }) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [toggled, setToggled] = useState(false);
   const [broken, setBroken] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
 
   return (
     <div
@@ -36,7 +41,6 @@ const SideBar = () => {
         toggled={toggled}
         onBackdropClick={() => setToggled(false)}
         onBreakPoint={setBroken}
-        // image="/assets/17372.jpg"
         breakPoint="md"
         style={{ height: "100%" }}
       >
@@ -47,7 +51,7 @@ const SideBar = () => {
             <Menu iconShape="square">
               {/* LOGO */}
               <MenuItem
-                onClick={() => setisCollapsed(!isCollapsed)}
+                onClick={() => setIsCollapsed(!isCollapsed)}
                 icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
                 style={{
                   margin: "10px 0 20px 0",
@@ -60,70 +64,44 @@ const SideBar = () => {
                     alignItems="center"
                     ml="15px"
                   >
-                    <Typography>ROITAI APP</Typography>
-                    <IconButton onClick={() => setisCollapsed(!isCollapsed)}>
+                    <Typography>SOLAR APP</Typography>
+                    <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                       <MenuOutlinedIcon />
                     </IconButton>
                   </Box>
                 )}
               </MenuItem>
-              
 
-              <Link to="/admin" className="menu-bars">
-                <MenuItem icon={<HomeOutlinedIcon />}>Dashboard</MenuItem>
-              </Link>
+              <MenuItem icon={<HomeOutlinedIcon />} onClick={() => handleNavigation('/dashboard/overview')}>
+                Dashboard
+              </MenuItem>
 
               <SubMenu icon={<MapOutlinedIcon />} label="Data">
-                <Link to={"/admin/viewtable"} className="menu-bars">
-                  <MenuItem icon={<TableViewIcon />}>
-                    {" "}
-                    Table 
-                  </MenuItem>
-                </Link>
-                <MenuItem icon={<BarChartOutlinedIcon />}>
-                  {" "}
-                  Line charts
+                <MenuItem icon={<TableViewIcon />} onClick={() => handleNavigation('/dashboard/plant')}>
+                  Plant
                 </MenuItem>
+                <MenuItem icon={<BarChartOutlinedIcon />}>Line charts</MenuItem>
               </SubMenu>
 
               <SubMenu label="Manage" icon={<PeopleOutlinedIcon />}>
-                <Link to={"/admin/manage"} className="menu-bars">
-                  <MenuItem>User</MenuItem>
-                </Link>
-                <MenuItem> Admin</MenuItem>
+                <MenuItem onClick={() => handleNavigation('/admin/manage')}>
+                  User
+                </MenuItem>
+                <MenuItem>Admin</MenuItem>
               </SubMenu>
-            </Menu>
 
-            <div
-              style={{
-                padding: "0 24px",
-                marginBottom: "8px",
-                marginTop: "32px",
-              }}
-            >
-              <Typography
-                variant="body2"
-                fontWeight={600}
-                style={{
-                  opacity: isCollapsed ? 0 : 0.5,
-                  letterSpacing: "0.5px",
-                }}
-              >
-                Extra
-              </Typography>
-            </div>
-
-            <Menu>
+              {/* Additional Menu Items */}
               <MenuItem icon={<CalendarTodayOutlinedIcon />}>Calendar</MenuItem>
               <MenuItem icon={<ReceiptOutlinedIcon />}>Documentation</MenuItem>
             </Menu>
           </div>
+
           <div style={{ display: "flex", flexDirection: "column", height: "8%" }}>
-            <Link to={"/"} className="menu-bars">
-              <Menu>
-                <MenuItem icon={<LogoutIcon />}>Logout</MenuItem>
-              </Menu>
-            </Link>
+            <Menu>
+              <MenuItem icon={<LogoutIcon />} onClick={() => handleNavigation('/')}>
+                Logout
+              </MenuItem>
+            </Menu>
           </div>
         </div>
       </Sidebar>
@@ -141,4 +119,5 @@ const SideBar = () => {
     </div>
   );
 };
+
 export default SideBar;

@@ -1,0 +1,54 @@
+.profile-detail {
+    background-color: rgb(243, 235, 235);
+    min-width: 100px;
+    transition: 0.5s;
+    max-width: 150px;
+    border-radius: 18px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 40px; /* ความกว้างของรูปภาพ */
+    height: 40px; /* ความสูงของรูปภาพ */
+    overflow: hidden;
+    border-radius: 50%; /* ทำให้เป็นวงกลม */
+    margin: 0 auto; /* ทำให้ตรงกลาง */
+}
+
+.avatar img {
+    width: 90%;
+    height: 100%;
+    object-fit: cover; /* ทำให้รูปภาพเต็มพื้นที่วงกลม */
+}
+
+/* ขนาดหน้าจอที่กว้างไม่เกิน 768px */
+@media (max-width: 768px) {
+    .profile-detail {
+        transition: 0.5s;
+        min-width: 100px;
+        max-width: 100px;
+    }
+}
+
+/* ขนาดหน้าจอที่กว้างไม่เกิน 480px */
+@media (max-width: 480px) {
+    .profile-detail {
+        transition: 0.5s;
+        min-width: 50px;
+        max-width: 50px;
+    }
+}
+
+
+
+
+.left_setting {
+display: flex;
+margin-right: 35px;
+
+}

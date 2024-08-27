@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Routes, Route } from 'react-router-dom';  
+import { useNavigate, Routes, Route ,Outlet} from 'react-router-dom';
 import HeaderBar from "../layout/Navbar";
 import SideBar from "../layout/Sidebar";
 import Overview from "../page/Overview";
-// import { CssBaseline, Box } from "@mui/material";
+import Plant from '../page/plant';
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import SignIn from '../page/Login';
+
 
 function Dashboard() {
   const [isSidebar, setIsSidebar] = useState(true);
@@ -19,12 +20,12 @@ function Dashboard() {
     role: ""
   });
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
-  // Function to show multiple Toast notifications    
+  // Function to show multiple Toast notifications
   const showMultipleNotifications = (count) => {
     for (let i = 0; i < count; i++) {
-      toast.error("Token expired or invalid");    
+      toast.error("Token expired or invalid");
     }
   };
 
@@ -34,7 +35,7 @@ function Dashboard() {
         const token = localStorage.getItem('token');
         if (!token) {
           toast.error("No token found");
-          navigate('/login'); 
+          navigate('/login');
           return;
         }
 
@@ -47,8 +48,8 @@ function Dashboard() {
 
         if (response.status === 401) {
           localStorage.removeItem('token'); // Remove token if expired
-          showMultipleNotifications(3); 
-          navigate('/login'); 
+          showMultipleNotifications(3);
+          navigate('/login');
           return;
         }
 
@@ -58,12 +59,12 @@ function Dashboard() {
 
         const result = await response.json();
         console.log(result);
-        
+
         if (result && result.email) {
           setUser({
             avatar: result.avatar || "",
             firstname: result.firstname || "",
-            lastname: result.lastname || "" ,
+            lastname: result.lastname || "",
             role: result.role || ""
           });
         } else {
@@ -81,17 +82,16 @@ function Dashboard() {
     <>
       <CssBaseline />
       <div className="app">
-        <SideBar isSidebar={isSidebar} /> 
+        <SideBar isSidebar={isSidebar} />
         <main className="content">
           <div className="navbar">
             <HeaderBar setIsSidebar={setIsSidebar} user={user} />
           </div>
           <div className="content_body">
             <Box m="20px">
-              <Routes>
-                <Route path="/overview" element={<Overview />} />
-                <Route path="/*" element={<Overview />} />
-              </Routes>
+              
+              <Outlet />
+              
             </Box>
           </div>
         </main>
