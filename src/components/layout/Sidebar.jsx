@@ -1,41 +1,54 @@
-import React, { useState } from "react";
-import {
-  Sidebar,
-  Menu,
-  MenuItem,
-  SubMenu,
-} from "react-pro-sidebar";
+import React, { useState, useEffect } from "react";
+import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Box, IconButton, Typography } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-import TableViewIcon from '@mui/icons-material/TableView';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AddHomeIcon from '@mui/icons-material/AddHome';
+import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
 
-const SideBar = ({ isSidebar }) => {
+const SideBar = ({ isSidebar, user }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [toggled, setToggled] = useState(false);
   const [broken, setBroken] = useState(false);
   const navigate = useNavigate();
 
-  const handleNavigation = (path) => {
-    navigate(path);
+  useEffect(() => {
+    const handleTouchStart = (e) => {
+      const touch = e.touches[0];
+      window.startX = touch.clientX;
+    };
+
+    const handleTouchEnd = (e) => {
+      const touch = e.changedTouches[0];
+      const endX = touch.clientX;
+
+      if (window.startX < endX && Math.abs(window.startX - endX) > 50) {
+        setToggled(true);
+      }
+    };
+
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, []);
+
+  const handleNavigation = (path, user) => {
+    navigate(path, { state: { user } });
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        height: "100%",
-      }}
-    >
+    <div style={{ display: "flex", height: "100%" }}>
       <Sidebar
         collapsed={isCollapsed}
         toggled={toggled}
@@ -44,18 +57,13 @@ const SideBar = ({ isSidebar }) => {
         breakPoint="md"
         style={{ height: "100%" }}
       >
-        <div
-          style={{ display: "flex", flexDirection: "column", height: "100%" }}
-        >
+        <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
           <div style={{ flex: 1, marginBottom: "32px" }}>
             <Menu iconShape="square">
-              {/* LOGO */}
               <MenuItem
                 onClick={() => setIsCollapsed(!isCollapsed)}
                 icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
-                style={{
-                  margin: "10px 0 20px 0",
-                }}
+                style={{ margin: "10px 0 20px 0" }}
               >
                 {!isCollapsed && (
                   <Box
@@ -72,50 +80,44 @@ const SideBar = ({ isSidebar }) => {
                 )}
               </MenuItem>
 
-              <MenuItem icon={<HomeOutlinedIcon />} onClick={() => handleNavigation('/dashboard/overview')}>
+              <MenuItem icon={<HomeOutlinedIcon />} onClick={() => handleNavigation('/dashboard/overview', user)}>
                 Dashboard
               </MenuItem>
 
-              <SubMenu icon={<MapOutlinedIcon />} label="Data">
-                <MenuItem icon={<TableViewIcon />} onClick={() => handleNavigation('/dashboard/plant')}>
-                  Plant
-                </MenuItem>
-                <MenuItem icon={<BarChartOutlinedIcon />}>Line charts</MenuItem>
+              <SubMenu icon={<MapOutlinedIcon />} label="Plant">
+                <SubMenu icon={<AddHomeIcon />} label="Plant">
+                  <MenuItem 
+                    icon={<DisplaySettingsIcon />} 
+                    onClick={() => handleNavigation('/dashboard/plant', {user})}
+                  >
+                    Parameter
+                  </MenuItem>
+                </SubMenu>
+                <MenuItem icon={<BarChartOutlinedIcon />}>Plant Management</MenuItem>
               </SubMenu>
 
               <SubMenu label="Manage" icon={<PeopleOutlinedIcon />}>
-                <MenuItem onClick={() => handleNavigation('/admin/manage')}>
+                <MenuItem onClick={() => handleNavigation('/admin/manage', user)}>
                   User
                 </MenuItem>
                 <MenuItem>Admin</MenuItem>
               </SubMenu>
 
-              {/* Additional Menu Items */}
               <MenuItem icon={<CalendarTodayOutlinedIcon />}>Calendar</MenuItem>
               <MenuItem icon={<ReceiptOutlinedIcon />}>Documentation</MenuItem>
             </Menu>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", height: "8%" }}>
+            <div>eee{user.firstname}</div>
             <Menu>
-              <MenuItem icon={<LogoutIcon />} onClick={() => handleNavigation('/')}>
+              <MenuItem icon={<LogoutIcon />} onClick={() => handleNavigation('/', user)}>
                 Logout
               </MenuItem>
             </Menu>
           </div>
         </div>
       </Sidebar>
-      <main>
-        <div style={{ padding: "16px 2px ", color: "#44596e" }}>
-          <div style={{ marginBottom: "16px" }}>
-            {broken && (
-              <IconButton onClick={() => setToggled(!toggled)}>
-                <MenuOutlinedIcon />
-              </IconButton>
-            )}
-          </div>
-        </div>
-      </main>
     </div>
   );
 };

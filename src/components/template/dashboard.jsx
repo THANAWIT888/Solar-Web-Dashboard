@@ -19,6 +19,7 @@ function Dashboard() {
     lastname: "",
     role: ""
   });
+  const users = { firstname: 'John' };
 
   const navigate = useNavigate();
 
@@ -35,38 +36,41 @@ function Dashboard() {
         const token = localStorage.getItem('token');
         if (!token) {
           toast.error("No token found");
-          navigate('/login');
+          navigate('/');
           return;
         }
-
+  
         const response = await fetch("http://100.94.171.111:8000/users/me", {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
           }
         });
-
+  
         if (response.status === 401) {
           localStorage.removeItem('token'); // Remove token if expired
           showMultipleNotifications(3);
-          navigate('/login');
+          navigate('/');
           return;
         }
-
+  
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-
+  
         const result = await response.json();
-        console.log(result);
-
+        // console.log(result);
+  
         if (result && result.email) {
           setUser({
+            id: result.id || "",  // เพิ่มการจัดการ id
             avatar: result.avatar || "",
             firstname: result.firstname || "",
             lastname: result.lastname || "",
             role: result.role || ""
           });
+        // console.log(user)
+          
         } else {
           toast.error("Failed to fetch user data");
         }
@@ -74,7 +78,7 @@ function Dashboard() {
         toast.error("Error: " + error.message);
       }
     };
-
+  
     fetchUserData();
   }, [navigate]);
 
@@ -82,7 +86,7 @@ function Dashboard() {
     <>
       <CssBaseline />
       <div className="app">
-        <SideBar isSidebar={isSidebar} />
+        <SideBar isSidebar={isSidebar} user={user} />
         <main className="content">
           <div className="navbar">
             <HeaderBar setIsSidebar={setIsSidebar} user={user} />
@@ -90,7 +94,7 @@ function Dashboard() {
           <div className="content_body">
             <Box m="20px">
               
-              <Outlet />
+              <Outlet context={{ user }} />
               
             </Box>
           </div>
