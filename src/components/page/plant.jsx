@@ -27,6 +27,10 @@ import 'react-toastify/dist/ReactToastify.css';
 function Plant() {
   const { user } = useOutletContext();
   const navigate = useNavigate();
+
+  const checkIsSystemAdmin = (user) => {
+    return user.role === 'systemadmin';
+  };
   
   const dateNow = new Date().toISOString();
   const [open, setOpen] = useState(false);
@@ -43,9 +47,12 @@ function Plant() {
   const [activeStep, setActiveStep] = useState(0);
   const gridRef = useRef(null);
   const [rowData, setRowData] = useState([]);
+  
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  // console.log(user.role)
 
   const handleChange = (e) => {
     setFormValues({
@@ -77,6 +84,7 @@ function Plant() {
       }
 
       const result = await response.json();
+      console.log(result)
       setRowData(result);
     } catch (error) {
       toast.error("Error: " + error.message);
@@ -133,6 +141,32 @@ function Plant() {
       gridRef.current.api.exportDataAsExcel();
     }
   }, []);
+  
+
+  const CustomButtonComponent = (props) => {
+    const { role, plant } = props;
+    const navigate = useNavigate();
+
+    const handleViewClick = () => {
+      // ส่งข้อมูลไปยังหน้า parameter ผ่าน state
+      navigate('/dashboard/parameter', { state: { plant } });
+    };
+
+    return (
+      <div>
+        {role === 'systemadmin' ? (
+          <>
+            <button onClick={handleViewClick}>View</button>
+            <button onClick={() => window.alert('Edit Clicked')}>Edit</button>
+            <button onClick={() => window.alert('Delete Clicked')}>Delete</button>
+          </>
+        ) : (
+          <button onClick={() => window.alert('View Only Clicked')}>View Only</button>
+        )}
+      </div>
+    );
+  };
+  
 
   const paginationPageSize = 10;
   const paginationPageSizeSelector = [10, 20, 50, 100];
@@ -143,9 +177,13 @@ function Plant() {
     { headerName: 'Plant Country', field: 'plant_country' },
     { headerName: 'Plant Create At', field: 'plant_created_at' },
     { headerName: 'Plant Status', field: 'plant_status' },
-    { headerName: 'Management', field: 'Management' } 
-    
+    {
+      headerName: 'Management',
+      field: 'Management',
+      cellRenderer: (params) => <CustomButtonComponent role={user.role} plant={params.data} /> // ส่งข้อมูลแถว
+    }
   ];
+  
 
   const steps = ['Plant Form'];
   const isSmallScreen = useMediaQuery('(max-width:450px)');
@@ -262,7 +300,11 @@ function Plant() {
       <h1>Plant Page</h1>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
         <Button variant="contained" color="primary" onClick={onBtExport}>Export to Excel</Button>
-        <Button variant="contained" color="primary" onClick={handleOpen}>Add Plant</Button>
+        {checkIsSystemAdmin(user) && (
+        <Button variant="contained" color="primary" onClick={handleOpen}>
+          Add Plant
+        </Button>
+        )}
       </div>
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact

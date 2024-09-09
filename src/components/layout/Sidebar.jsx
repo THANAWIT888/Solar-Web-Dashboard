@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, styled, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
@@ -85,14 +85,9 @@ const SideBar = ({ isSidebar, user }) => {
               </MenuItem>
 
               <SubMenu icon={<MapOutlinedIcon />} label="Plant">
-                <SubMenu icon={<AddHomeIcon />} label="Plant">
-                  <MenuItem 
-                    icon={<DisplaySettingsIcon />} 
-                    onClick={() => handleNavigation('/dashboard/plant', {user})}
-                  >
-                    Parameter
-                  </MenuItem>
-                </SubMenu>
+                <MenuItem icon={<AddHomeIcon />}  onClick={() => handleNavigation('/dashboard/plant', {user})} label="Plant">
+                Plant
+                </MenuItem>
                 <MenuItem icon={<BarChartOutlinedIcon />}>Plant Management</MenuItem>
               </SubMenu>
 
@@ -109,9 +104,9 @@ const SideBar = ({ isSidebar, user }) => {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", height: "8%" }}>
-            <div>eee{user.firstname}</div>
-            <Menu>
-              <MenuItem icon={<LogoutIcon />} onClick={() => handleNavigation('/', user)}>
+            {/* <div>eee{user.firstname}</div> */}
+            <Menu style={{backgroundColor : 'red' , margin : ' 6px'  , borderRadius : ' 5px'}}>
+              <MenuItem icon={<LogoutIcon />} onClick={() => handleNavigation('/', user) }>
                 Logout
               </MenuItem>
             </Menu>
