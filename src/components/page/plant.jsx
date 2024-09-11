@@ -27,7 +27,6 @@ import 'react-toastify/dist/ReactToastify.css';
 function Plant() {
   const { user } = useOutletContext();
   const navigate = useNavigate();
-
   const checkIsSystemAdmin = (user) => {
     return user.role === 'systemadmin';
   };
@@ -143,14 +142,14 @@ function Plant() {
   }, []);
   
 
-  const CustomButtonComponent = (props) => {
+  const CustomButtonComponent = (props ) => {
     const { role, plant } = props;
     const navigate = useNavigate();
 
     const handleViewClick = () => {
-      // ส่งข้อมูลไปยังหน้า parameter ผ่าน state
-      navigate('/dashboard/parameter', { state: { plant } });
+      navigate('/dashboard/parameter', { state: { plant, role, user } });
     };
+    
 
     return (
       <div>

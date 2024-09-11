@@ -91,7 +91,7 @@ function Dashboard() {
           <div className="navbar">
             <HeaderBar setIsSidebar={setIsSidebar} user={user} />
           </div>
-          <div className="content_body">
+          <div className="content_body" style={{marginTop : '20px'}}>
             <Box m="20px">
               
               <Outlet context={{ user }} />

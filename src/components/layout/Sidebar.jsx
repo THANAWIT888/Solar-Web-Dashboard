@@ -12,6 +12,9 @@ import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddHomeIcon from '@mui/icons-material/AddHome';
 import DisplaySettingsIcon from '@mui/icons-material/DisplaySettings';
+import TopicIcon from '@mui/icons-material/Topic';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
+import PaymentsIcon from '@mui/icons-material/Payments';
 
 const SideBar = ({ isSidebar, user }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -83,12 +86,29 @@ const SideBar = ({ isSidebar, user }) => {
               <MenuItem icon={<HomeOutlinedIcon />} onClick={() => handleNavigation('/dashboard/overview', user)}>
                 Dashboard
               </MenuItem>
-
-              <SubMenu icon={<MapOutlinedIcon />} label="Plant">
-                <MenuItem icon={<AddHomeIcon />}  onClick={() => handleNavigation('/dashboard/plant', {user})} label="Plant">
-                Plant
+              
+              <SubMenu icon={<MapOutlinedIcon />} onClick={() => handleNavigation('/dashboard/plant', {user})} label="Plant">
+                <MenuItem icon={<AddHomeIcon />} onClick={() => handleNavigation('/dashboard/parameter', {user})} label="Plant">
+                Parameter
                 </MenuItem>
-                <MenuItem icon={<BarChartOutlinedIcon />}>Plant Management</MenuItem>
+                <MenuItem icon={<ContactPageIcon />} onClick={() => handleNavigation('/dashboard/contract' , user)} >Contact</MenuItem>
+                <SubMenu label="Billing" icon={<PaymentsIcon />}>
+                <MenuItem >
+                View Billing
+                </MenuItem>
+                <MenuItem>Adjust Billing</MenuItem>
+                <MenuItem>Manual Add Billing</MenuItem>
+              </SubMenu>
+
+              <SubMenu label="Data" icon={<TopicIcon />}>
+                <MenuItem >
+                View Data
+                </MenuItem>
+                <MenuItem >
+                View Gain
+                </MenuItem>
+              </SubMenu>
+
               </SubMenu>
 
               <SubMenu label="Manage" icon={<PeopleOutlinedIcon />}>
@@ -105,7 +125,7 @@ const SideBar = ({ isSidebar, user }) => {
 
           <div style={{ display: "flex", flexDirection: "column", height: "8%" }}>
             {/* <div>eee{user.firstname}</div> */}
-            <Menu style={{backgroundColor : 'red' , margin : ' 6px'  , borderRadius : ' 5px'}}>
+            <Menu style={{backgroundColor : '#F3EBEB' , margin : ' 6px'  , borderRadius : ' 5px'}}>
               <MenuItem icon={<LogoutIcon />} onClick={() => handleNavigation('/', user) }>
                 Logout
               </MenuItem>

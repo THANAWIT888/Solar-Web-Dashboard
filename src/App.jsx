@@ -6,6 +6,7 @@ import SignUp from "./components/page/register";
 import Plant from "./components/page/plant";
 import Overview from "./components/page/Overview"; // เพิ่มหน้า Overview
 import Parameter from "./components/page/parameter";
+import Contract from "./components/page/contract";
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
       <Route path="plant" element={<Plant />} />
       <Route path="overview" element={<Overview />} />
       <Route path="parameter" element={<Parameter />} />
+      <Route path="contract" element={<Contract />} />
+      
       </Route>
     </Routes>
   );
