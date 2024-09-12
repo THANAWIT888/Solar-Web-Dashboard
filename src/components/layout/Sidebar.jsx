@@ -93,11 +93,13 @@ const SideBar = ({ isSidebar, user }) => {
                 </MenuItem>
                 <MenuItem icon={<ContactPageIcon />} onClick={() => handleNavigation('/dashboard/contract' , user)} >Contact</MenuItem>
                 <SubMenu label="Billing" icon={<PaymentsIcon />}>
-                <MenuItem >
+                <MenuItem onClick={() => handleNavigation('/dashboard/billing' , user)}>
                 View Billing
                 </MenuItem>
-                <MenuItem>Adjust Billing</MenuItem>
-                <MenuItem>Manual Add Billing</MenuItem>
+                {/* billing-adjust */}
+                <MenuItem onClick={() => handleNavigation('/dashboard/billing-adjust' , user)}>Adjust Billing</MenuItem>
+                {/* billing-manual */}
+                <MenuItem onClick={() => handleNavigation('/dashboard/billing-manual' , user)} >Manual Add Billing</MenuItem>
               </SubMenu>
 
               <SubMenu label="Data" icon={<TopicIcon />}>
