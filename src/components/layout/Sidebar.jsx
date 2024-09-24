@@ -103,10 +103,10 @@ const SideBar = ({ isSidebar, user }) => {
               </SubMenu>
 
               <SubMenu label="Data" icon={<TopicIcon />}>
-                <MenuItem >
+                <MenuItem onClick={() => handleNavigation('/dashboard/view-data' , user)}>
                 View Data
                 </MenuItem>
-                <MenuItem >
+                <MenuItem onClick={() => handleNavigation('/dashboard/view-gain' , user)}>
                 View Gain
                 </MenuItem>
               </SubMenu>
@@ -127,7 +127,7 @@ const SideBar = ({ isSidebar, user }) => {
 
           <div style={{ display: "flex", flexDirection: "column", height: "8%" }}>
             {/* <div>eee{user.firstname}</div> */}
-            <Menu style={{backgroundColor : '#F3EBEB' , margin : ' 6px'  , borderRadius : ' 5px'}}>
+            <Menu style={{backgroundColor : '#5B308E' , margin : ' 6px'  , borderRadius : ' 5px', color : '#ffffff'}}>
               <MenuItem icon={<LogoutIcon />} onClick={() => handleNavigation('/', user) }>
                 Logout
               </MenuItem>

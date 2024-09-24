@@ -10,6 +10,8 @@ import Contract from "./components/page/contract";
 import Billing from "./components/page/billing";
 import BillingAdjus from "./components/page/BillingAdjus";
 import BillingManual from "./components/page/BillingManual";
+import ViewData from "./components/page/ViewData";
+import ViewGian from "./components/page/ViewGian";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
       <Route path="billing" element={<Billing />} />
       <Route path="billing-adjust" element={<BillingAdjus />} />
       <Route path="billing-manual" element={<BillingManual />} />
+      <Route path="view-data" element={<ViewData />} />
+      <Route path="view-gain" element={<ViewGian />} />
       
       </Route>
     </Routes>

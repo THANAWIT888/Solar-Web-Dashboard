@@ -144,7 +144,7 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+            Sign In
             </Button>
             <Grid container>
               <Grid item xs>
@@ -155,6 +155,9 @@ export default function SignIn() {
               <Grid item>
                 <Link href="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
+                </Link>
+                <Link href="/dashboard" variant="body2">
+                  {"go dashboard"}
                 </Link>
               </Grid>
             </Grid>

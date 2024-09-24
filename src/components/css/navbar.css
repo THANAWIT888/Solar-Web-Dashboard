@@ -1,5 +1,5 @@
 .profile-detail {
-    background-color: rgb(243, 235, 235);
+    background-color:#ede7f6 ;
     min-width: 100px;
     transition: 0.5s;
     max-width: 150px;
@@ -42,13 +42,40 @@
         min-width: 50px;
         max-width: 50px;
     }
+    .profile-detail button {
+    margin-left: 5px;
+}
+    .profile-detail .avatar {
+        display: none;
+    }
+
+    .left_setting .app-icon1{
+        display: none;
+    }
+
+    .left_setting .app-icon2{
+        display: block;
+    }
+
+    .left_setting .app-icon3{
+        display: none;
+    }
+
+    .left_setting .app-icon4{
+        display: none;
+    }
+
 }
 
 
-
-
+.left_setting .app-icon2{
+    display: none;
+}
 .left_setting {
 display: flex;
 margin-right: 35px;
 
 }
+
+
+

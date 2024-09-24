@@ -26,7 +26,7 @@ const HeaderBar = ({ user }) => {
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
       {/* search */}
-      <Box display="flex" borderRadius="3px" backgroundColor="#F5EFE7">
+      <Box display="flex" borderRadius="3px" backgroundColor="#ede7f6">
         <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
         <IconButton type="button" sx={{ p: 1 }}>
           <SearchIcon />
@@ -34,18 +34,18 @@ const HeaderBar = ({ user }) => {
       </Box>
 
       {/* icons */}
-      <Box display="flex">
-        <div className="left_setting">
-          <IconButton>
+      <Box display="flex" >
+        <div className="left_setting" style={{backgroundColor : ''}}>
+          <IconButton className="app-icon1">
             <FullscreenIcon />
           </IconButton>
-          <IconButton>
+          <IconButton className="app-icon2">
             <AppsIcon />
           </IconButton>
-          <IconButton>
+          <IconButton className="app-icon3">
             <NotificationsOutlinedIcon />
           </IconButton>
-          <IconButton>
+          <IconButton className="app-icon4">
             <MailOutlineIcon />
           </IconButton>
         </div>
@@ -53,7 +53,7 @@ const HeaderBar = ({ user }) => {
           <div className="avatar" style={{ marginRight: '15px' }}>
             <img src="https://cdn.pixabay.com/photo/2016/12/13/05/15/puppy-1903313_1280.jpg" alt="avatar" />
           </div>
-          <IconButton onClick={handleClick}>
+          <IconButton onClick={handleClick} className="button-setting">
             <SettingsOutlinedIcon />
           </IconButton>
           <Menu

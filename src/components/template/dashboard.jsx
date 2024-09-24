@@ -30,57 +30,57 @@ function Dashboard() {
     }
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          toast.error("No token found");
-          navigate('/');
-          return;
-        }
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const token = localStorage.getItem('token');
+  //       if (!token) {
+  //         toast.error("No token found");
+  //         navigate('/');
+  //         return;
+  //       }
   
-        const response = await fetch("http://100.94.171.111:8000/users/me", {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+  //       const response = await fetch("http://100.94.171.111:8000/users/me", {
+  //         method: 'GET',
+  //         headers: {
+  //           'Authorization': `Bearer ${token}`
+  //         }
+  //       });
   
-        if (response.status === 401) {
-          localStorage.removeItem('token'); // Remove token if expired
-          showMultipleNotifications(3);
-          navigate('/');
-          return;
-        }
+  //       if (response.status === 401) {
+  //         localStorage.removeItem('token'); // Remove token if expired
+  //         showMultipleNotifications(3);
+  //         navigate('/');
+  //         return;
+  //       }
   
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
   
-        const result = await response.json();
-        // console.log(result);
+  //       const result = await response.json();
+  //       // console.log(result);
   
-        if (result && result.email) {
-          setUser({
-            id: result.id || "",  // เพิ่มการจัดการ id
-            avatar: result.avatar || "",
-            firstname: result.firstname || "",
-            lastname: result.lastname || "",
-            role: result.role || ""
-          });
-        // console.log(user)
+  //       if (result && result.email) {
+  //         setUser({
+  //           id: result.id || "",  // เพิ่มการจัดการ id
+  //           avatar: result.avatar || "",
+  //           firstname: result.firstname || "",
+  //           lastname: result.lastname || "",
+  //           role: result.role || ""
+  //         });
+  //       // console.log(user)
           
-        } else {
-          toast.error("Failed to fetch user data");
-        }
-      } catch (error) {
-        toast.error("Error: " + error.message);
-      }
-    };
+  //       } else {
+  //         toast.error("Failed to fetch user data");
+  //       }
+  //     } catch (error) {
+  //       toast.error("Error: " + error.message);
+  //     }
+  //   };
   
-    fetchUserData();
-  }, [navigate]);
+  //   fetchUserData();
+  // }, [navigate]);
 
   return (
     <>
@@ -91,8 +91,8 @@ function Dashboard() {
           <div className="navbar">
             <HeaderBar setIsSidebar={setIsSidebar} user={user} />
           </div>
-          <div className="content_body" style={{marginTop : '20px'}}>
-            <Box m="20px">
+          <div className="content_body" style={{ marginTop: '20px !important' }}>
+            <Box m="20px" >
               
               <Outlet context={{ user }} />
               
